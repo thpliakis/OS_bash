@@ -1,0 +1,28 @@
+#!/usr/bin/env fish
+
+function sort_pictures
+    set name  $argv[1]
+    set name2 $argv[2]
+    cd $name/
+    set -l a > find **.jpg
+    mkdir $name2
+    for v in $a
+        set y  (date -r $v +%G)
+        set m  (date -r $v +%B)
+        set d  (date -r $v +%d)
+        if test -d $y/$m/$d
+            mv $v $name2/$y/$m/$d
+        else  
+	    if test -d  $y
+	       mkdir  $name2/$y
+	    end 
+	    if test -d  $y/$m
+	       mkdir  $name2/$y/$m
+	    end    
+	    if test -d $y/$m/$d
+	       mkdir  $name2/$y/$m/$d
+	    end
+	    mv $v $name2/$y/$m/$d
+        end
+    end
+end
